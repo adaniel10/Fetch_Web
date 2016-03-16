@@ -1,0 +1,9 @@
+{% extends "rango/base.html" %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+
+        <h3>Hi {{ user.username }}, since you are logged in, only YOU can see this page.</h3>
+
+{% endblock %}
