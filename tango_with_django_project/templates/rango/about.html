@@ -2,14 +2,17 @@
 
 {% load staticfiles %}
 
-{% block title %}{{ category_name }}{% endblock %}
+{% block title %}About{% endblock %}
 
 {% block body_block %}
-
-        <h1>Rango says...</h1>
-        Welcome to about page! <strong>{{ boldmessage }}</strong><br />
-        <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" />
-
-        <p> You have visited the site {{ visits }} time(s).</p>
+    <div class="page-header">
+                <h1>About Rango</h1>
+            </div>
+            <div>
+            <p>This is <strong>Rango's about page.</strong></p>
+            <p>You have visited this site <strong>{{ visits }}</strong> time(s).</p>
+            <p>Here's a picture of rango.</p></br>
+            <img  width="150" height="200" src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> <!-- New line -->
+            </div>
 
 {% endblock %}

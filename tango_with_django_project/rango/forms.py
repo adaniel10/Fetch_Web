@@ -2,6 +2,7 @@ from django import forms
 from rango.models import Page, Category, UserProfile
 from django.contrib.auth.models import User
 
+
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Please enter the category name.")
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
@@ -48,9 +49,16 @@ class PageForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
 
+    def __init__(self,*args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+
+        for fieldname in ['username', 'password', 'email']:
+            self.fields[fieldname].help_text = None
+
     class Meta:
         model = User
         fields = ('username', 'email', 'password')
+
 
 class UserProfileForm(forms.ModelForm):
     class Meta:

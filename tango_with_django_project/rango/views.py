@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from rango.bing_search import run_query
 
 
 def index(request):
@@ -140,7 +141,7 @@ def add_page(request, category_name_slug):
 
     return render(request, 'rango/add_page.html', context_dict)
 
-'''
+
 def register(request):
 
     if request.session.test_cookie_worked():
@@ -200,9 +201,9 @@ def register(request):
     # Render the template depending on the context.
     return render(request,
             'rango/register.html',
-            {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )'''
+            {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
 
-'''
+
 def user_login(request):
 
     # If the request is a HTTP POST, try to pull out the relevant information.
@@ -242,14 +243,14 @@ def user_login(request):
     else:
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
-        return render(request, 'rango/login.html', {})'''
+        return render(request, 'rango/login.html', {})
 
 
 @login_required
 def restricted(request):
     return render(request, 'rango/restricted.html',{})
 
-'''
+
 # Use the login_required() decorator to ensure only those logged in can access the view.
 @login_required
 def user_logout(request):
@@ -257,4 +258,18 @@ def user_logout(request):
     logout(request)
 
     # Take the user back to the homepage.
-    return HttpResponseRedirect('/rango/')'''
+    return HttpResponseRedirect('/rango/')
+
+
+def search(request):
+
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            # Run our Bing function to get the results list!
+            result_list = run_query(query)
+
+    return render(request, 'rango/search.html', {'result_list': result_list})
